@@ -6,7 +6,7 @@
 /*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 12:32:11 by sazelda           #+#    #+#             */
-/*   Updated: 2022/01/12 18:26:07 by sazelda          ###   ########.fr       */
+/*   Updated: 2022/01/12 19:40:05 by sazelda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,30 @@ void	child_process(int f1, int f2, char **env, int end[2], char *comand)
 	free(comands);
 }
 
-void	parent_process(int f1, int f2, char **env, int end[2], char *comand)
+void	parent_process(int f1, int f2, char **env, int end[2], char *comand, char *path)
 {
 	int		status;
 	int		code;
 	char	**comands;
+	char	**paths;
+	int		i;
+	char	*pat;
 
+	paths = ft_split(path, ':');
 	comands = ft_split(comand, ' ');
 	waitpid(-1, &status, 0);
 	dup2(f2, STDOUT_FILENO);
 	dup2(end[0], STDIN_FILENO);
 	close(end[1]);
 	close(f2);
-	code = execve("/usr/bin/wc", comands, env);
-	free(comands);
+	i = 0;
+	while (paths[i])
+	{
+		paths[i] = ft_strjoin(paths[i], "/");
+		paths[i] = ft_strjoin(paths[i], comands[0]);
+		code = execve(paths[i], comands, env);
+		i++;
+	}
 }
 
 int	main(int argc, char **argv, char **env)
@@ -63,5 +73,5 @@ int	main(int argc, char **argv, char **env)
 	if (!parent)
 		child_process(f1, f2, env, end, argv[2]);
 	else
-		parent_process(f1, f2, env, end, argv[3]);
+		parent_process(f1, f2, env, end, argv[3], env[7]);
 }
