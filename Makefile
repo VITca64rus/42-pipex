@@ -1,6 +1,6 @@
 NAME = pipex
 CC = gcc
-CFLAGS = 
+CFLAGS = -Wall -Werror -Wextra
 SRC  =  	main.c
 
 OBJ = $(patsubst %.c,%.o,$(SRC))

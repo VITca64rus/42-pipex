@@ -6,21 +6,40 @@
 /*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 12:32:11 by sazelda           #+#    #+#             */
-/*   Updated: 2022/01/13 11:45:29 by sazelda          ###   ########.fr       */
+/*   Updated: 2022/01/13 12:06:34 by sazelda          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "ft_pipex.h"
 #include <stdio.h>
-#include <errno.h>
 #include <string.h>
+#include "ft_pipex.h"
+
+void	ft_loop(char **paths, char **comands, char **env)
+{
+	int		i;
+	char	*ptr;
+
+	i = 0;
+	while (paths[i])
+	{
+		ptr = paths[i];
+		paths[i] = ft_strjoin(paths[i], "/");
+		free(ptr);
+		ptr = paths[i];
+		paths[i] = ft_strjoin(paths[i], comands[0]);
+		free(ptr);
+		execve(paths[i], comands, env);
+		free(paths[i]);
+		i++;
+	}
+	free(paths[i]);
+}
 
 void	child_process(int f1, char **env, int end[2], char *comand)
 {
-	int		code;
 	char	**comands;
 	char	**paths;
 	int		i;
@@ -33,23 +52,16 @@ void	child_process(int f1, char **env, int end[2], char *comand)
 	close(f1);
 	if (i < 0)
 		exit(0);
-	i = 0;
-	while (paths[i])
-	{
-		paths[i] = ft_strjoin(paths[i], "/");
-		paths[i] = ft_strjoin(paths[i], comands[0]);
-		code = execve(paths[i], comands, env);
-		i++;
-	}
+	ft_loop(paths, comands, env);
+	free(comands);
+	free(paths);
 }
 
 void	parent_process(int f2, char **env, int end[2], char *comand)
 {
 	int		status;
-	int		code;
 	char	**comands;
 	char	**paths;
-	int		i;
 
 	paths = ft_split(&env[7][5], ':');
 	comands = ft_split(comand, ' ');
@@ -58,14 +70,9 @@ void	parent_process(int f2, char **env, int end[2], char *comand)
 	dup2(end[0], STDIN_FILENO);
 	close(end[1]);
 	close(f2);
-	i = 0;
-	while (paths[i])
-	{
-		paths[i] = ft_strjoin(paths[i], "/");
-		paths[i] = ft_strjoin(paths[i], comands[0]);
-		code = execve(paths[i], comands, env);
-		i++;
-	}
+	ft_loop(paths, comands, env);
+	free(comands);
+	free(paths);
 }
 
 int	main(int argc, char **argv, char **env)
