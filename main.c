@@ -1,11 +1,4 @@
-#include <sys/types.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include "libft/libft.h"
+#include "ft_pipex.h"
 
 void child_process(int pipefd[2], int fd1, char **path, char *cmd, char **env)
 {
@@ -13,10 +6,7 @@ void child_process(int pipefd[2], int fd1, char **path, char *cmd, char **env)
 	char *ptr;
 	char **comands;
 
-	printf("cmd = %s\n", cmd);
 	comands = ft_split(cmd, ' ');
-
-    printf("child\n");
     dup2(fd1, 0);
     dup2(pipefd[1],1);
    	close(pipefd[0]);
@@ -48,7 +38,6 @@ void parent_process(int pipefd[2], int fd2, char **path, char *cmd, char **env)
     buf = malloc(10000);
 
     waitpid(-1, status, 0);
-    printf("parent\n");
     dup2(fd2, 1);
 	dup2(pipefd[0], 0);
     close(pipefd[1]);

@@ -1,0 +1,9 @@
+total 48
+-rw-rw-r-- 1 sazelda sazelda  1111 мар  6 17:52 ft_pipex.h
+-rw-rw-r-- 1 sazelda sazelda     7 мар  6 15:24 in
+drwxrwxr-x 3 sazelda sazelda  4096 мар  6 17:53 libft
+-rw-rw-r-- 1 sazelda sazelda  1893 мар  6 17:56 main.c
+-rw-rw-r-- 1 sazelda sazelda  4624 мар  6 18:00 main.o
+-rw-rw-r-- 1 sazelda sazelda   465 мар  6 13:21 Makefile
+-rw-r--r-- 1 sazelda sazelda     0 мар  6 18:06 out
+-rwxrwxr-x 1 sazelda sazelda 17608 мар  6 18:00 pipex
