@@ -3,45 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hvayon <hvayon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/11 17:24:25 by sazelda           #+#    #+#             */
-/*   Updated: 2021/10/11 17:32:14 by sazelda          ###   ########.fr       */
+/*   Created: 2021/10/20 20:23:56 by hvayon            #+#    #+#             */
+/*   Updated: 2021/10/25 21:45:22 by hvayon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static void	go_to(const char *str, int *i, int *znak)
+#include "libft.h"
+
+int	ft_handle_range(long res, int nominate)
 {
-	while (str[*i] == ' ' || str[*i] == '\t' || str[*i] == '\n' \
-			|| str[*i] == '\v' || str[*i] == '\f' || str[*i] == '\r')
-		*i = *i + 1;
-	if (str[*i] == '-')
-	{
-		*znak = -1;
-		*i = *i + 1;
-	}
-	else if (str[*i] == '+')
-		*i = *i + 1;
+	if (res >= -2147483648 && res <= 2147483647)
+		return ((int)res);
+	else if (nominate == 1)
+		return (-1);
+	else
+		return (0);
 }
 
 int	ft_atoi(const char *str)
 {
-	long int	res;
-	int			i;
-	int			znak;
+	int		i;
+	int		nominate;
+	long	res;
 
+	nominate = 1;
 	res = 0;
 	i = 0;
-	znak = 1;
-	go_to(str, &i, &znak);
+	while ((str[i] >= 9 && str[i] <= 13) || (str[i] == 32))
+		i = i + 1;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			nominate = nominate * -1;
+		i = i + 1;
+	}
 	while (str[i] >= '0' && str[i] <= '9')
-	{	
-		if (znak * res < -2147483648)
-			return (0);
-		else if (res > 2147483647)
-			return (-1);
-		res = res * 10 + (str[i] - '0');
+	{
+		res = 10 * res + nominate * (str[i] - '0');
 		i++;
 	}
-	return ((int)res * znak);
+	return (ft_handle_range(res, nominate));
 }

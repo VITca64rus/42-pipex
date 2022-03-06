@@ -3,77 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hvayon <hvayon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/11 17:26:54 by sazelda           #+#    #+#             */
-/*   Updated: 2021/10/11 17:34:40 by sazelda          ###   ########.fr       */
+/*   Created: 2021/10/24 19:47:50 by hvayon            #+#    #+#             */
+/*   Updated: 2021/10/25 21:50:03 by hvayon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
 
-static unsigned int	ft_get_len(int n)
+static int	ft_numlen(int n)
 {
-	unsigned int	res;
+	int	len;
 
-	res = 0;
-	if (n == -2147483648)
-		return (11);
+	len = 0;
+	if (n == 0)
+		return (1);
 	if (n < 0)
+		len = 1;
+	else
+		len = 0;
+	while (n)
 	{
-		n = n * (-1);
-		res++;
-	}
-	while (n > 0)
-	{
-		res++;
 		n = n / 10;
+		len++;
 	}
-	return (res);
+	return (len);
 }
 
-static char	*ft_create_zero(void)
+char	*ft_itoa(int i)
 {
 	char	*res;
+	int		len;
+	long	nb;
 
-	res = (char *)malloc(2);
-	res[0] = '0';
-	res[1] = '\0';
-	return (res);
-}
-
-static void	ft_work_with_minus(char	*res, int *n, unsigned int *len)
-{
-	res[0] = '-';
-	if (*n != -2147483648)
-		*n = *n * (-1);
-	else
-	{
-		res[10] = '8';
-		*n = *n / 10;
-		*n = *n * (-1);
-		*len = *len - 1;
-	}
-}
-
-char	*ft_itoa(int n)
-{
-	char			*res;
-	unsigned int	len;
-
-	if (n == 0)
-		return (ft_create_zero());
-	len = ft_get_len(n);
-	res = (char *)malloc(len + 1);
+	nb = i;
+	len = ft_numlen(nb);
+	res = (char *)malloc(sizeof(char) * len + 1);
 	if (!res)
-		return ((void *)0);
-	res[len] = '\0';
-	if (n < 0)
-		ft_work_with_minus(res, &n, &len);
-	while (n > 0)
+		return (NULL);
+	res[len--] = '\0';
+	if (nb == 0)
+		res[0] = '0';
+	if (nb < 0)
 	{
-		res[len - 1] = (n % 10) + '0';
-		n = n / 10;
+		res[0] = '-';
+		nb = -nb;
+	}
+	while (nb != 0)
+	{
+		res[len] = ((nb % 10) + '0');
+		nb = nb / 10;
 		len--;
 	}
 	return (res);

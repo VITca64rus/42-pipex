@@ -3,50 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hvayon <hvayon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/11 17:29:04 by sazelda           #+#    #+#             */
-/*   Updated: 2021/10/11 17:50:40 by sazelda          ###   ########.fr       */
+/*   Created: 2021/10/25 19:35:42 by hvayon            #+#    #+#             */
+/*   Updated: 2021/10/26 21:38:50 by hvayon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	check_in(char a, char *s)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] == a)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	unsigned int	i;
-	unsigned int	at_end;
-	unsigned int	at_start;
-	char			*res;
+	char	*new;
+	size_t	len;
 
-	at_start = 0;
-	if (!s1)
-		return ((void *)0);
-	if (ft_strlen(s1) == 0)
-		return (ft_substr(s1, 0, 0));
-	while (check_in(s1[at_start], (char *)set) == 1 && s1[at_start])
-		at_start++;
-	at_end = 0;
-	i = ft_strlen(s1) - 1;
-	while (check_in(s1[i], (char *)set) == 1 && i > 0)
-	{
-		at_end++;
-		i--;
-	}
-	res = ft_substr(s1, at_start, ft_strlen(s1) - at_end - at_start);
-	return (res);
+	if (!s1 ||!set)
+		return (0);
+	while (*s1 && ft_strchr(set, *s1))
+		s1++;
+	len = ft_strlen(s1);
+	while (len && ft_strchr(set, s1[len]))
+		len--;
+	new = ft_substr(s1, 0, len + 1);
+	return (new);
 }

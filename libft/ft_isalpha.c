@@ -3,17 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hvayon <hvayon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/11 17:26:41 by sazelda           #+#    #+#             */
-/*   Updated: 2021/10/11 17:26:42 by sazelda          ###   ########.fr       */
+/*   Created: 2021/10/25 19:29:40 by hvayon            #+#    #+#             */
+/*   Updated: 2021/10/25 21:47:37 by hvayon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+static int	ft_isupper(int c)
+{
+	return (c >= 65 && c <= 90);
+}
+
+static int	ft_islower(int c)
+{
+	return (c >= 97 && c <= 122);
+}
+
 int	ft_isalpha(int c)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-		return (1);
-	else
-		return (0);
+	return (ft_isupper(c) || ft_islower(c));
 }

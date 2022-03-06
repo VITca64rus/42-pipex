@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hvayon <hvayon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/11 17:27:33 by sazelda           #+#    #+#             */
-/*   Updated: 2021/10/14 12:31:59 by sazelda          ###   ########.fr       */
+/*   Created: 2021/10/26 19:46:57 by hvayon            #+#    #+#             */
+/*   Updated: 2021/10/26 21:02:46 by hvayon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 t_list	*ft_lstlast(t_list *lst)
 {
-	while (lst && lst->next)
-		lst = lst->next;
-	return (lst);
+	t_list	*last;
+
+	last = lst;
+	while (last && last->next)
+		last = last -> next;
+	return (last);
 }

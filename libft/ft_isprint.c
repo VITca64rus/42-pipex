@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hvayon <hvayon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/11 17:27:04 by sazelda           #+#    #+#             */
-/*   Updated: 2021/10/11 17:27:05 by sazelda          ###   ########.fr       */
+/*   Created: 2021/10/25 19:31:26 by hvayon            #+#    #+#             */
+/*   Updated: 2021/10/25 21:48:53 by hvayon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_isprint(int c)
 {
-	if (c >= ' ' && c <= '~')
-		return (1);
-	else
-		return (0);
+	return (c >= 32 && c <= 126);
 }

@@ -3,50 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hvayon <hvayon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/11 17:27:59 by sazelda           #+#    #+#             */
-/*   Updated: 2021/10/11 18:07:38 by sazelda          ###   ########.fr       */
+/*   Created: 2021/10/14 20:39:09 by hvayon            #+#    #+#             */
+/*   Updated: 2021/10/25 21:51:01 by hvayon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
-static void	ft_next(unsigned const char	*s, unsigned char		*d, size_t len)
+void	*ft_memmove(void *dst, const void *scr, size_t len)
 {
-	size_t	i;
+	size_t			i;
+	unsigned char	*dest;
+	unsigned char	*secr;
 
+	dest = (unsigned char *)dst;
+	secr = (unsigned char *)scr;
+	if (!dst && !scr)
+		return (dst);
 	i = 0;
-	if (d > s)
+	if (dest > secr)
 	{
-		len--;
-		while (len > 0)
-		{
-			d[len] = s[len];
-			len--;
-		}
-		d[len] = s[len];
+		while (len-- > 0)
+			dest[len] = secr[len];
 	}
 	else
 	{
-		while (i < len)
+		while (len > i)
 		{
-			d[i] = s[i];
+			dest[i] = secr[i];
 			i++;
 		}
 	}
-}
-
-void	*ft_memmove(void *dst, const void *src, size_t len)
-{
-	unsigned const char	*s;
-	unsigned char		*d;
-
-	s = (unsigned char *)src;
-	d = (unsigned char *)dst;
-	if (!len || d == s)
-		return (dst);
-	ft_next(s, d, len);
 	return (dst);
 }

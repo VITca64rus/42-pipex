@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sazelda <sazelda@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hvayon <hvayon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/11 17:28:39 by sazelda           #+#    #+#             */
-/*   Updated: 2021/10/11 17:42:58 by sazelda          ###   ########.fr       */
+/*   Created: 2021/10/25 19:28:07 by hvayon            #+#    #+#             */
+/*   Updated: 2021/10/25 21:57:32 by hvayon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,27 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char			*res;
-	unsigned int	i;
-	unsigned int	j;
+	size_t	i;
+	size_t	l1;
+	size_t	l2;
+	char	*new;
 
-	if (!s1)
-		return ((void *)0);
+	if (!s1 || !s2)
+		return (NULL);
+	l1 = ft_strlen(s1);
+	l2 = ft_strlen(s2);
+	new = (char *)malloc(sizeof(char) * (l1 + l2 + 1));
+	if (!new)
+		return (NULL);
+	i = -1;
+	while (++i < l1)
+		new[i] = s1[i];
 	i = 0;
-	res = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!res)
-		return ((void *)0);
-	while (i < ft_strlen(s1))
+	while (l2--)
 	{
-		res[i] = s1[i];
+		new[l1 + i] = s2[i];
 		i++;
 	}
-	j = 0;
-	while (j < ft_strlen(s2))
-	{
-		res[i] = s2[j];
-		i++;
-		j++;
-	}
-	res[i] = '\0';
-	return (res);
+	new[l1 + i] = '\0';
+	return (new);
 }
